@@ -18,7 +18,7 @@ Promise.all([
   d3.csv("data/processed/co2_timeseries.csv"),
   d3.csv("data/processed/tas_timeseries.csv"),
   d3.csv("data/processed/fgco2_timeseries.csv"),
-  d3.csv("data/processed/cland_mean.csv"),
+  d3.csv("data/processed/cland_continents.csv"),
 ]).then(([co2Raw, tasRaw, fgco2Raw, clandMapRaw]) => {
 
   const parse = (rows, valueKey) => rows
@@ -33,7 +33,17 @@ Promise.all([
     latitude:  +d.latitude,
     longitude: +d.longitude,
     cLand:     +d.cLand,
+    continent: d.continent
   })).filter(d => d.cLand > 0);
+
+  const continentStats = d3.rollup(
+    mapData,
+    v => ({
+      mean: d3.mean(v, d => d.cLand),
+      max: d3.max(v, d => d.cLand)
+    }),
+    d => d.continent
+  );
 
   const allYears = [...co2Data, ...tasData, ...fgco2Data].map(d => d.year);
   const yearExtent = d3.extent(allYears);
@@ -54,7 +64,7 @@ Promise.all([
 
   const allCharts = [co2Chart, ...otherCharts];
 
-  buildMap("#carbon-map", mapData);
+  buildMap("#carbon-map", mapData, continentStats);
 
   d3.selectAll(".toggle-btn").on("click", function () {
     const sc = this.dataset.scenario;
@@ -216,7 +226,7 @@ Promise.all([
     return { redraw, updateVisibility };
   }
 
-  function buildMap(selector, data) {
+  function buildMap(selector, data, stats) {
     const W = 960, H = 480;
 
     const svg = d3.select(selector).append("svg")
@@ -257,17 +267,33 @@ Promise.all([
       .attr("fill", d => colorScale(d.cLand))
       .attr("opacity", 0.75);
 
-    const mapTip = d3.select(selector).append("div").attr("class", "tooltip");
+    const mapTip = d3.select("body").append("div").attr("class", "tooltip");
 
     dots.on("mousemove", function (event, d) {
       d3.select(this).attr("r", 3).attr("opacity", 1);
+
+      const localStat = stats.get(d.continent);
+
+      const statHtml = (localStat && d.continent !== "Ocean/Coast")
+        ? `<div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid #ccc; font-size:0.9em;">
+            <strong>${d.continent} Statistics</strong><br>
+            Mean: ${localStat.mean.toFixed(3)} kg m⁻²<br>
+            Max: ${localStat.max.toFixed(3)} kg m⁻²
+            </div>`
+        : "";
+
+      const[x, y] = d3.pointer(event, svg.node());
+
       mapTip.style("opacity", 1)
-        .style("left", `${event.offsetX + 14}px`)
-        .style("top",  `${event.offsetY - 10}px`)
+        .style("left", `${event.pageX + 14}px`)
+        .style("top",  `${event.pageY - 10}px`)
         .html(`Lat: ${d.latitude.toFixed(1)}° Lon: ${d.longitude.toFixed(1)}°<br>
-               <strong>cLand: ${d.cLand.toFixed(3)} kg m⁻²</strong>`);
+               <strong>cLand: ${d.cLand.toFixed(3)} kg m⁻²</strong>
+              ${statHtml}`);
+
     }).on("mouseleave", function () {
-      d3.select(this).attr("r", 1.6).attr("opacity", 0.75);
+      const currentZoom = d3.zoomTransform(svg.node()).k;
+      d3.select(this).attr("r", 1.6 / currentZoom).attr("opacity", 0.75);
       mapTip.style("opacity", 0);
     });
 
