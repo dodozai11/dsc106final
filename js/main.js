@@ -40,6 +40,7 @@ Promise.all([
     mapData,
     v => ({
       mean: d3.mean(v, d => d.cLand),
+      median: d3.median(v, d => d.cLand),
       max: d3.max(v, d => d.cLand)
     }),
     d => d.continent
@@ -278,6 +279,7 @@ Promise.all([
         ? `<div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid #ccc; font-size:0.9em;">
             <strong>${d.continent} Statistics</strong><br>
             Mean: ${localStat.mean.toFixed(3)} kg m⁻²<br>
+            Median: ${localStat.median.toFixed(3)} kg m⁻²<br>
             Max: ${localStat.max.toFixed(3)} kg m⁻²
             </div>`
         : "";
