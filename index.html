@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Earth Carbon Visualized</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Where Does Carbon Go — and What Does It Cost Us?</h1>
+    <p class="subtitle">
+      Exploring Earth's carbon cycle under two futures: a moderate emissions path
+      <span class="pill ssp245">SSP2-4.5</span> vs. a high-emissions path
+      <span class="pill ssp585">SSP5-8.5</span>
+    </p>
+  </header>
+
+  <div class="controls">
+    <span class="control-label">Show scenarios:</span>
+    <button class="toggle-btn active" data-scenario="historical">Historical</button>
+    <button class="toggle-btn active" data-scenario="ssp245">SSP2-4.5</button>
+    <button class="toggle-btn active" data-scenario="ssp585">SSP5-8.5</button>
+  </div>
+
+  <div id="scrolly">
+    <div id="sticky-chart">
+      <h2 class="chart-title">Atmospheric CO₂ Mass</h2>
+      <div id="co2-chart"></div>
+    </div>
+    <div id="scroll-story">
+      <div class="step" data-year-end="1900">
+        <h3>The Pre-Industrial Baseline</h3>
+        <p>In the many years prior to the Industrial Revolution, atmospheric carbon remained consistently stable, especially in relation to the natural carbon cycle where oceans absorbed carbon and forests were releasing it.</p>
+      </div>
+      <div class="step" data-year-end="2000">
+        <h3>20th Century Acceleration</h3>
+        <p>Post-WWII economic expansion supercharged emissions. Cars, planes, factories. The modern world became heavily reliant on fossil fuels. By 2000, CO₂ levels were higher than at any point in human history.</p>
+      </div>
+      <div class="step" data-year-end="2025">
+        <h3>Carbon Emissions Today</h3>
+        <p>We are here. The historical record ends and the projections begin. The path forward is determined by Shared Socioeconomic Pathways (SSPs), which are climate scenarios developed to model different possible futures based on policy and societal choices.</p>
+      </div>
+      <div class="step" data-year-end="2060">
+        <h3>The Fork in the Road</h3>
+        <p>Under SSP2-4.5, emissions peak and begin to decline as clean energy scales up. Under SSP5-8.5, fossil fuel use accelerates unchecked. The two paths diverge sharply after 2030.</p>
+      </div>
+      <div class="step" data-year-end="2100">
+        <h3>Two Very Different Futures</h3>
+        <p>By 2100, the gap between the two scenarios is enormous. The choice between these futures is not a matter of technology — it is a matter of political and economic will.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts-row">
+    <section class="chart-panel">
+      <h2>Global Mean Temperature</h2>
+      <p class="chart-desc">Near-surface air temperature (°C). Rising CO₂ drives warming — the gap between scenarios widens after 2050.</p>
+      <div id="tas-chart"></div>
+    </section>
+    <section class="chart-panel">
+      <h2>Ocean CO₂ Uptake</h2>
+      <p class="chart-desc">Mean flux of CO₂ from atmosphere into ocean (g m⁻² yr⁻¹). The ocean acts as a carbon sink — but its capacity weakens under high emissions.</p>
+      <div id="fgco2-chart"></div>
+    </section>
+  </div>
+
+  <section class="map-section">
+    <h2>Global Land Carbon Distribution</h2>
+    <p class="chart-desc">Spatial distribution of terrestrial carbon storage (kg m⁻²). Scroll to zoom, drag to pan, hover for values.</p>
+    <div id="carbon-map"></div>
+  </section>
+
+  <section class="writeup">
+    <h2>About This Visualization</h2>
+    <p>
+      We updated the webpage from prior projects, where there was previously an interactive map showcasing land carbon distribution and interactive graphs of ocean CO₂ uptake and mean temperature. We have now added a scrollytelling visualization of Earth's carbon cycle using CMIP6 climate data. For this narrative, we show descriptions of historically and projected significant time periods on the right. The main graph is a sticky CO₂ timeseries that progressively reveals historical data then transitions to future scenarios as the user scrolls down.
+    </p>
+    <p>
+      The most challenging part of the project will be designing a strong hook for the beginning with author-driven visuals. Carbon emissions is a very common topic, so it may be difficult to create a compelling visualization that makes viewers emotionally resonant with the data. We will consider using different opening visuals and strong annotations that connect real-world events to what readers already care about. Another challenge will be coordinating different interactions such as chart updating and hover information while remaining consistent with the scrolling experience.
+    </p>
+  </section>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="js/main.js" type="module"></script>
+
+</body>
+</html>

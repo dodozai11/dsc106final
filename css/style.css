@@ -1,0 +1,324 @@
+
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  margin: 0;
+  background: #f7f7f5;
+  color: #222;
+}
+
+
+
+header {
+  background: #1a1a2e;
+  color: #fff;
+  padding: 32px 48px 24px;
+}
+
+header h1 {
+  margin: 0 0 8px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 1rem;
+  opacity: 0.85;
+  max-width: 720px;
+}
+
+.pill {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #fff;
+}
+.pill.ssp245 { background: #f28e2b; }
+.pill.ssp585 { background: #e15759; }
+
+
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 48px;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.control-label {
+  font-size: 0.85rem;
+  color: #666;
+  margin-right: 4px;
+}
+
+.toggle-btn {
+  padding: 5px 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 16px;
+  background: #fff;
+  font-size: 0.82rem;
+  cursor: pointer;
+  color: #555;
+  transition: all 0.15s;
+}
+.toggle-btn:hover { border-color: #888; }
+.toggle-btn[data-scenario="historical"].active { background: #555; border-color: #555; color: #fff; }
+.toggle-btn[data-scenario="ssp245"].active     { background: #f28e2b; border-color: #f28e2b; color: #fff; }
+.toggle-btn[data-scenario="ssp585"].active     { background: #e15759; border-color: #e15759; color: #fff; }
+
+
+#scrolly {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem 3rem;
+  align-items: flex-start;
+}
+
+#sticky-chart {
+  position: sticky;
+  top: 20px;
+  flex: 1;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+#scroll-story {
+  flex: 1;
+}
+
+.step {
+  padding: 2rem 1.5rem;
+  margin-bottom: 60vh;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  border-left: 4px solid #ccc;
+  transition: border-color 0.3s;
+}
+
+.step.is-active {
+  border-left-color: #1a1a2e;
+}
+
+.step h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.step p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+
+
+.charts-row {
+  display: flex;
+  gap: 0;
+  padding: 24px 32px 0;
+  flex-wrap: wrap;
+}
+
+.chart-panel {
+  flex: 1 1 480px;
+  background: #fff;
+  border-radius: 8px;
+  margin: 8px;
+  padding: 16px 16px 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.charts-row--single {
+  padding-bottom: 8px;
+}
+
+.chart-panel--wide {
+  flex: 1 1 100%;
+}
+
+.chart-panel h2 {
+  margin: 0 0 2px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.chart-desc {
+  margin: 0 0 10px;
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+
+.map-section {
+  background: #fff;
+  border-radius: 8px;
+  margin: 16px 40px 8px;
+  padding: 16px 16px 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.map-section h2 {
+  margin: 0 0 2px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+#carbon-map {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#carbon-map svg {
+  border-radius: 6px;
+  max-width: 100%;
+}
+
+
+
+.brush-context {
+  background: #fff;
+  border-radius: 8px;
+  margin: 8px 40px 16px;
+  padding: 12px 16px 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.context-label {
+  margin: 0 0 6px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+}
+
+#brush-chart svg { max-width: 100%; }
+
+.brush .selection {
+  fill: #1a1a2e;
+  fill-opacity: 0.12;
+  stroke: #1a1a2e;
+  stroke-width: 1;
+}
+
+
+.axis-label {
+  font-size: 11px;
+  fill: #555;
+}
+
+.legend-label {
+  font-size: 11px;
+  fill: #555;
+}
+
+.annot-text {
+  font-size: 10px;
+  fill: #aaa;
+}
+
+
+.tooltip {
+  position: absolute;
+  background: rgba(255,255,255,0.96);
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+  line-height: 1.6;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.1s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  z-index: 10;
+  white-space: nowrap;
+}
+
+#co2-chart, #tas-chart, #cland-chart, #fgco2-chart, #carbon-map {
+  position: relative;
+}
+
+
+
+.load-error {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffc107;
+  border-radius: 6px;
+  padding: 14px 20px;
+  margin: 20px 40px;
+  font-size: 0.9rem;
+}
+
+
+.writeup {
+  max-width: 860px;
+  margin: 32px auto 60px;
+  padding: 0 24px;
+}
+
+.writeup h2 {
+  font-size: 1.3rem;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.writeup h3 {
+  font-size: 1rem;
+  margin: 24px 0 8px;
+  color: #333;
+}
+
+.writeup p {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: #444;
+  margin: 0 0 12px;
+}
+
+.writeup a { color: #1a6fb5; }
+
+code {
+  background: #f0f0f0;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.88em;
+}
+
+
+@media (max-width: 780px) {
+  header { padding: 20px 20px 16px; }
+  .controls { padding: 10px 20px; }
+  #scrolly { flex-direction: column; padding: 1rem; }
+  #sticky-chart { position: relative; top: 0; }
+  .charts-row { padding: 12px 8px 0; }
+  .chart-panel { flex: 1 1 100%; margin: 6px 4px; }
+  .map-section, .brush-context { margin: 8px 12px; }
+}
+
+.chart-title {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
